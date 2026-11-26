@@ -81,27 +81,6 @@ Changing any one field breaks it. Usernames can't contain `|`.
 (2) verify signature → (3) RSA-decrypt the AES key → (4) AES-GCM decrypt → display.
 If any step fails, nothing from the message is shown, only the reason.
 
-## Demo script (for the video)
-
-**Normal message**
-1. `python server.py`, then start alice, bob, carol.
-2. In alice: `/msg bob hello bob`
-3. Bob shows `alice (#N, signature VALID): hello bob`.
-4. The server console and `server_log.txt` show only base64 `encrypted_key`, `nonce`, `ciphertext`; no plaintext, no usable AES key.
-
-**Attacks** (restart with `python server.py --malicious`, reconnect the clients).
-Type the command in the **server** window, then have alice send a message to bob.
-
-| Server command | What it does | What the client shows |
-|---|---|---|
-| `flip` | flips 1 byte of the ciphertext | Bob: `signature check FAILED` |
-| `recipient carol` | rewrites `to` to carol and delivers it there | Carol: `signature check FAILED` |
-| `msgnum` | bumps the message number in the header | Bob: `signature check FAILED` |
-| `redirect carol` | delivers Bob's message to Carol, header untouched | Carol: `AES key could not be decrypted` |
-| `replay` | resends the last valid message right away (no need to send first) | Bob: `REPLAY - message #N already seen` |
-| `off` | disarms | — |
-
-**Dishonest user:** in carol: `/spoof bob alice give me your password` → Bob: `signature check FAILED - not really from 'alice'`.
 
 ## Security notes
 
