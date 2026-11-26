@@ -119,7 +119,3 @@ Type the command in the **server** window, then have alice send a message to bob
 - No forward secrecy: if a private key is stolen, old captured messages can be decrypted.
 - Timestamps are signed and shown but not used to reject old messages.
 - No TLS on the connection itself (the content is end-to-end encrypted anyway).
-
-## Do not submit
-
-`keys/` (private keys) and `server_log.txt` are in `.gitignore`. Don't include passwords anywhere.
